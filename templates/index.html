@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Splitter - Modern & Simple</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="background-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>PDF Splitter</h1>
+            <p>Precise, fast, and secure PDF tools.</p>
+        </header>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for message in messages %}
+                <div class="flash-message">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <main class="glass-card">
+            <form action="/process" method="POST" enctype="multipart/form-data" id="splitForm">
+                <div class="toggle-container">
+                    <button type="button" class="toggle-btn active" data-target="upload">Upload File</button>
+                    <button type="button" class="toggle-btn" data-target="url">Use URL</button>
+                    <input type="hidden" name="source" id="sourceInput" value="upload">
+                </div>
+
+                <div id="uploadFields" class="input-group">
+                    <label for="file">Select PDF File</label>
+                    <div class="file-drop-area" id="dropArea">
+                        <span class="file-msg">Drag and drop or click to upload</span>
+                        <input type="file" name="file" id="file" accept=".pdf">
+                    </div>
+                </div>
+
+                <div id="urlFields" class="input-group hidden">
+                    <label for="url">PDF URL</label>
+                    <input type="url" name="url" id="url" placeholder="https://example.com/document.pdf">
+                </div>
+
+                <div class="range-inputs">
+                    <div class="input-group">
+                        <label for="start_page">Start Page</label>
+                        <input type="number" name="start_page" id="start_page" min="1" value="1" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="end_page">End Page</label>
+                        <input type="number" name="end_page" id="end_page" min="1" value="1" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="btn-text">Split PDF</span>
+                    <div class="loader hidden"></div>
+                </button>
+            </form>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 PDF Splitter Tool. Modern & Secure.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
